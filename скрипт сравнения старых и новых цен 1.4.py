@@ -9,8 +9,8 @@ from glob import glob
 import time
 from datetime import datetime
 '''
-обязательно проверять желтые цены с комментами
-у кати не работал неболит королев и ленинский. ошибка в ценах
+убрать третью страницу и всю логику в ней
+подуматЬ, мб сравнивать как строки, если это строка? а если число - то как число
 '''
 #wb = openpyxl.load_workbook('рабочий шаблон для обновления прайса клиники.xlsx')
 start_time = datetime.now()
@@ -76,8 +76,9 @@ for i in range(1, rows + 1):
 		else:
 			e = str(sheet_0.cell(row = i, column = 3).value)
 			f = e.replace(",", ".")
+			print(sheet_1.cell(row = i, column = 2).value, sheet_1.cell(row = i, column = 3).value)
 			sheet_1.cell(row = i, column = 3).value = int(float((f)))
-			#print(sheet_1.cell(row = i, column = 3).value)
+			# print(sheet_1.cell(row = i, column = 3).value)
 ##############################################################################################################
 rows_0 = sheet_0.max_row + 1
 rows_1 = sheet_1.max_row + 1
@@ -109,6 +110,7 @@ for i in range(1, rows_0):
 				for k in range(1, rows_2):
 					cell_from_our_shablon = sheet_2.cell(row = k, column = 4).value
 					cell_from_our_price = sheet_2.cell(row = k, column = 5).value
+					print(k)
 					cell_from_our_shablon_split = cell_from_our_shablon.split(' ')
 					if len(cell_from_our_shablon_split) == 1:
 							shablon_iz_nashego_price_dla_poiska = str(cell_from_our_shablon_split).rstrip('\']')
