@@ -67,13 +67,11 @@ for i in range(2, rows + 1):
 		else:
 			e = str(sheet_1.cell(row = i, column = 3).value)
 			f = e.replace(",", ".")
-			print(sheet_1.cell(row = i, column = 3).value)
 			sheet_1.cell(row = i, column = 3).value = int(float((f)))
 ##############################################################################################################
 rows_0 = sheet_0.max_row + 1
 rows_1 = sheet_1.max_row + 1
 print(rows_0, rows_1)
-##################################################### основная часть #########################################
 ##################################################### основная часть #########################################
 print("Пошло дело, пошло! " + str(datetime.now() - start_time))
 for i in range(2, rows_0):
@@ -82,6 +80,10 @@ for i in range(2, rows_0):
 	rows, columns = sheet_0.max_row, sheet_0.max_column
 	cell_nazvanie_uslugi_old = sheet_0.cell(row = i, column = 2).value
 	cell_price_old = sheet_0.cell(row = i, column = 3).value
+	old_counter = round((i / (rows_0 * 2)) * 100)
+	new_counter = round(((i + 1) / (rows_0 * 2)) * 100)
+	if new_counter != old_counter:
+		print(new_counter, "%")
 
 	for j in range(2, rows_1):
 		
@@ -90,16 +92,17 @@ for i in range(2, rows_0):
 
 		if cell_nazvanie_uslugi_old == cell_nazvanie_uslugi_new and cell_nazvanie_uslugi_new != None:	
 			if cell_price_old == cell_price_new:
-				sheet_1.cell(row = j, column = 3).value = sheet_1.cell(row = j, column = 3).value
-				print(cell_price_new)
-				sheet_1.cell(row = j, column = 2).fill = PatternFill("solid", fgColor="FFFF00")				
-				#Заливает желтым, цены совпали все ок
+				if sheet_1.cell(row = j, column = 5).value == None:
+					sheet_1.cell(row = j, column = 2).fill = PatternFill("solid", fgColor="FFFF00")				
+					#Заливает желтым, цены совпали все ок
+				else:
+					sheet_1.cell(row = j, column = 4).value = "Услуга встречается несколько раз!"
 								
 			else:
 				sheet_1.cell(row = j, column = 2).fill = PatternFill("solid", fgColor="008000")
 				#Заливает зеленым, цены не совпали 
 				not_matched_value_from_old = cell_price_old
-				print(cell_price_new)
+				# print(cell_price_new)
 				sheet_1.cell(row = j, column = 5).value = not_matched_value_from_old 
 				sheet_1.cell(row = j, column = 6).value = "Старая цена"
 				# print(not_matched_value_from_old)
@@ -107,31 +110,34 @@ print("Середина пути! Nel mezzo del cammin di nostra vita " + str(da
 
 
 #################################################################################################################
-print("И последний рывок! " + str(datetime.now() - start_time))
 for i in range(2, rows_1):
 	wb.active = 1
 	sheet_1 = wb.active
 	cell_nazvanie_uslugi_old = sheet_1.cell(row = i, column = 2).value
 	cell_price_old = sheet_1.cell(row = i, column = 3).value
-
+	old_counter = (50 + round((i / (rows_1 * 2)) * 100))
+	new_counter = (50 + round(((i + 1) / (rows_1 * 2)) * 100))
+	if new_counter != old_counter:
+		print(new_counter, "%")
 	for j in range(2, rows_0):
 		
 		cell_nazvanie_uslugi_new = sheet_0.cell(row = j, column = 2).value
 		cell_price_new = sheet_0.cell(row = j, column = 3).value
 
-		if cell_nazvanie_uslugi_old == cell_nazvanie_uslugi_new and cell_nazvanie_uslugi_new != None:
-			#print(cell_nazvanie_uslugi_new)			
+		if cell_nazvanie_uslugi_old == cell_nazvanie_uslugi_new and cell_nazvanie_uslugi_new != None:		
 			if cell_price_old == cell_price_new:
-				sheet_0.cell(row = j, column = 2).fill = PatternFill("solid", fgColor="FFFF00")				
-				#Заливает желтым, цены совпали все ок								
+				if sheet_0.cell(row = j, column = 5).value == None:
+					sheet_0.cell(row = j, column = 2).fill = PatternFill("solid", fgColor="FFFF00")				
+					#Заливает желтым, цены совпали все ок
+				else:
+					sheet_0.cell(row = j, column = 4).value = "Услуга встречается несколько раз!"					
 			else:
 				sheet_0.cell(row = j, column = 2).fill = PatternFill("solid", fgColor="008000")
 				#Заливает зеленым, цены не совпали 
 				not_matched_value_from_old = cell_price_old
 				sheet_0.cell(row = j, column = 5).value = not_matched_value_from_old
 				sheet_0.cell(row = j, column = 6).value = "Новая цена"
-				print(not_matched_value_from_old)
+
 
 print("Успех! Белиссимоs!")
-time.sleep(2)
-wb.save('__рабочий шаблон для обновления прайса клиники после скрипта__.xlsx')
+wb.save('__после скрипта__' + str(filename_strip))
