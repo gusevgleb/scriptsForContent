@@ -4077,7 +4077,6 @@ def lab_finder():
 													break
 
 	def new_lab_finder(name_1, name_2, cell_id, stopword):
-
 		# print(where_is_lab_1)
 		wb.active = 0
 		sheet_0 = wb.active
@@ -4138,7 +4137,6 @@ def lab_finder():
 														sheet_1.cell(row = k, column = 6).value = 1
 														break
 		
-
 
 	new_lab_finder(["трихомо", "trichomonas", "хламид", "chlamydia"], ["гонор", "gonorrhoeae"], "ПЦР анализ на скрытые инфекции", ["акц", "назна", "схем", "при ", "профила"])
 	new_lab_finder(["микопла", "mуcoplasma"], ["гонор", "gonorrhoeae"], "ПЦР анализ на скрытые инфекции", ["акц", "назна", "схем", "при ", "профила"])
