@@ -4109,20 +4109,15 @@ def lab_finder():
 														sheet_0.cell(row = i, column = 5).value = '=HYPERLINK("{}", "{}")'.format(link_for_sheet_0, cell_value_name_from_template)
 														sheet_1.cell(row = k, column = 7).value = cell_value_name_from_price
 														dict_for_yellow_fill[cell_value_name_from_template] = sheet_0.cell(row = i, column = 2)
-
 														dict_for_rename[cell_value_name_from_template] = sheet_0.cell(row = i, column = 5)
-														
 														print(cell_value_name_from_template, cell_value_from_price, cell_value_name_from_price)
 														break
 													elif int(cell_value_from_price) < int(sheet_1.cell(row = k, column = 5).value):
 														sheet_1.cell(row = k, column = 5).value = cell_value_from_price
 														sheet_1.cell(row = k, column = 5).fill = PatternFill("solid", fgColor="008000")
 														sheet_1.cell(row = k, column = 6).value = 1 
-														sheet_0.cell(row = i, column = 2).fill = PatternFill("solid", fgColor="008000")
-
-														
+														sheet_0.cell(row = i, column = 2).fill = PatternFill("solid", fgColor="008000")	
 														must_rename = dict_for_rename.get(cell_value_name_from_template)
-
 														must_rename.value = ""
 														dict_for_rename[cell_value_name_from_template] = sheet_0.cell(row = i, column = 5)
 														link_for_sheet_0 = "#" + wb.sheetnames[1] + "!" + str(sheet_1.cell(row = k, column = 4).coordinate)
